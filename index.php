@@ -32,7 +32,12 @@ $results = $conn->query($sql);
             <?php endwhile;
             endif; ?>
             <tr>
-                <td><a href="adduser.php" class="btn btn-outline-primary">ADD NEW USER</a></td>
+                <td colspan="3">
+                    <a href="login.php" class="btn btn-outline-secondary">LOGOUT</a>
+                </td>
+                <td>
+                    <a href="adduser.php" class="btn btn-outline-primary" style="margin-left: 14px;">ADD NEW USER</a>
+                </td>
             </tr>
         </tbody>
     </table>
