@@ -6,8 +6,6 @@ $uid = $_GET['uid'];
 $sql = "SELECT * FROM users WHERE ID = $uid";
 $results = $conn->query($sql);
 $row = $results->fetch_assoc();
-
-
 ?>
 
 <div class="container">
@@ -35,7 +33,7 @@ $row = $results->fetch_assoc();
                 <tr>
                     <td colspan="2">
                         <a href="index.php?" class="btn btn-outline-secondary">BACK</a>
-                        <button class="btn btn-outline-danger float-right">CONFIRM DELETION</button>
+                        <a href="deleteuser.php?uid=<?php echo $row['ID']; ?>" class="btn btn-outline-danger float-right">CONFIRM DELETION</a>
                     </td>
                 </tr>
             </table>
