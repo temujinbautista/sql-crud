@@ -1,6 +1,22 @@
 <?php
 require_once 'inc/config.php';
 require 'inc/header.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_POST['password'] !== $_POST['confirm']) {
+        echo '<script language="javascript">';
+        echo 'alert("Password Does Not Match")';
+        echo '</script>';
+    } else {
+        $sql = $conn->prepare("INSERT INTO users (name, age, email, password) VALUES (?, ?, ?, MD5(?))");
+        $sql->bind_param("ssss", $_POST['name'], $_POST['age'], $_POST['email'], $_POST['confirm']);
+        if ($sql->execute()) {
+            header('Location: index.php?');
+        } else {
+            header('adduser.php');
+        }
+    }
+}
 ?>
 
 <div class="container">
@@ -12,23 +28,23 @@ require 'inc/header.php';
             <form method="post" enctype="multipart/form-data" action="">
                 <div class="form-group">
                     <label>Name</label>
-                    <input type="text" required name="name" class="form-control" required>
+                    <input type="text" required name="name" class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Age</label>
-                    <input type="text" required name="age" class="form-control" required>
+                    <input type="number" min="1" required name="age" class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="text" required name="email" class="form-control" required>
+                    <input type="text" required name="email" class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" required name="password" class="form-control" required>
+                    <input type="password" required name="password" class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Confirm Password</label>
-                    <input type="password" required name="confirm" class="form-control" required>
+                    <input type="password" required name="confirm" class="form-control">
                 </div>
                 <div class="form-group">
                     <a href="index.php?" class="btn btn-outline-success">BACK</a>
