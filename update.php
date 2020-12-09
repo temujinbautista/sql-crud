@@ -9,9 +9,18 @@ $row = $results->fetch_assoc();
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    $email = $_POST['email'];
+    $sql = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
+    $results = $conn->query($sql);
+    $row = $results->fetch_assoc();
     if ($_POST['newPassword'] !== $_POST['confirm']) {
         echo '<script language="javascript">';
         echo 'alert("Password Does Not Match")';
+        echo '</script>';
+    } elseif ($email == $row['email']) {
+        echo '<script language="javascript">';
+        echo 'alert("Email Already In Use")';
         echo '</script>';
     } else {
         $sql = $conn->prepare("UPDATE users SET name=?, age=?, email=?, password=MD5(?) WHERE ID = $uid");
