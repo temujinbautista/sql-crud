@@ -6,14 +6,14 @@ require 'inc/header.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $email = $_POST['email'];
-    $sql = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
-    $results = $conn->query($sql);
-    $row = $results->fetch_assoc();
+    $qry = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
+    $result = $conn->query($qry);
+    $uEmail = $result->fetch_assoc();
     if ($_POST['password'] !== $_POST['confirm']) {
         echo '<script language="javascript">';
         echo 'alert("Password Does Not Match")';
         echo '</script>';
-    } elseif ($email == $row['email']) {
+    } elseif ($email == $uEmail['email']) {
         echo '<script language="javascript">';
         echo 'alert("Email Already In Use")';
         echo '</script>';
