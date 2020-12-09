@@ -4,7 +4,8 @@ require 'inc/loginStyle.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+    
+    //Email & Password Verification
     $email = $_POST['email'];
     $password = md5($_POST['password']);
     $sql = $conn->prepare("SELECT * FROM users WHERE email = '$email' AND password = '$password' LIMIT 1");

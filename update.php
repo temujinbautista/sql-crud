@@ -10,19 +10,25 @@ $row = $results->fetch_assoc();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    //Email in Use Verification Query
     $email = $_POST['email'];
     $qry = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
     $result = $conn->query($qry);
     $uEmail = $result->fetch_assoc();
+
+    //Password Confirmation
     if ($_POST['newPassword'] !== $_POST['confirm']) {
         echo '<script language="javascript">';
         echo 'alert("Password Does Not Match")';
         echo '</script>';
+
+        //Error on Used Email & Confirmation on Same User to ID email
     } elseif ($email == $uEmail['email'] && $email !== $row['email']) {
         echo '<script language="javascript">';
         echo 'alert("Email Already In Use")';
         echo '</script>';
     } else {
+        //Update User Query
         $sql = $conn->prepare("UPDATE users SET name=?, age=?, email=?, password=MD5(?) WHERE ID = $uid");
         $sql->bind_param("ssss", $_POST['name'], $_POST['age'], $_POST['email'], $_POST['confirm']);
         if ($sql->execute()) {

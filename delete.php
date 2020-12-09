@@ -3,6 +3,7 @@ require_once 'inc/config.php';
 require 'inc/header.php';
 $uid = $_GET['uid'];
 
+//Fetch Data Query for Viewing
 $sql = "SELECT * FROM users WHERE ID = $uid";
 $results = $conn->query($sql);
 $row = $results->fetch_assoc();

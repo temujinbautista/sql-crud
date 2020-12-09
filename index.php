@@ -2,6 +2,8 @@
 require_once 'inc/config.php';
 require 'inc/header.php';
 
+
+//Fetch Data Query for Viewing
 $sql = "SELECT * FROM users";
 $results = $conn->query($sql);
 ?>
@@ -16,9 +18,9 @@ $results = $conn->query($sql);
         </thead>
         <tbody>
             <?php
+            //Loop to Display All Data
             if ($results->num_rows > 0) :
                 while ($row = $results->fetch_assoc()) :
-
             ?>
                     <tr>
                         <td><?php echo $row['name'] ?></td>

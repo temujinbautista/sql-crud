@@ -4,20 +4,25 @@ require 'inc/header.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+    //Email in Use Verification Query
     $email = $_POST['email'];
     $qry = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
     $result = $conn->query($qry);
     $uEmail = $result->fetch_assoc();
+
+    //Password Confirmation
     if ($_POST['password'] !== $_POST['confirm']) {
         echo '<script language="javascript">';
         echo 'alert("Password Does Not Match")';
         echo '</script>';
+
+        //Error on Used Email
     } elseif ($email == $uEmail['email']) {
         echo '<script language="javascript">';
         echo 'alert("Email Already In Use")';
         echo '</script>';
     } else {
+        //Create User Query
         $sql = $conn->prepare("INSERT INTO users (name, age, email, password) VALUES (?, ?, ?, MD5(?))");
         $sql->bind_param("ssss", $_POST['name'], $_POST['age'], $_POST['email'], $_POST['confirm']);
         if ($sql->execute()) {
