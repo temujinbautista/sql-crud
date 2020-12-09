@@ -7,15 +7,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $email = $_POST['email'];
     $password = md5($_POST['password']);
-    $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password' LIMIT 1";
-    $results = $conn->query($sql);
-    $row = $results->fetch_assoc();
-    if ($row['email'] == $email && $row['password'] == $password) {
-        header('Location: index.php?');
-    } else {
-        echo "Error";
+    $sql = $conn->prepare("SELECT * FROM users WHERE email = '$email' AND password = '$password' LIMIT 1");
+    if($sql->execute()){
+        $result = $sql->get_result();
+        if($result->num_rows > 0){
+            header('Location: index.php?');
+        } else {
+            echo '<script language="javascript">';
+            echo 'alert("Incorrect Login")';
+            echo '</script>';
+        }
     }
-}
+ }
 ?>
 
 <div class="login-form">
