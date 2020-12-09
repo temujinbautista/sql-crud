@@ -9,11 +9,11 @@ $row = $results->fetch_assoc();
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
+
     $email = $_POST['email'];
     $qry = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
-    $results = $conn->query($qry);
-    $uEmail = $results->fetch_assoc();
+    $result = $conn->query($qry);
+    $uEmail = $result->fetch_assoc();
     if ($_POST['newPassword'] !== $_POST['confirm']) {
         echo '<script language="javascript">';
         echo 'alert("Password Does Not Match")';
